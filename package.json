@@ -1,0 +1,10 @@
+{
+  "name": "renovate-poc",
+  "version": "1.0.0",
+  "description": "Proof of concept for time feature",
+  "main": "src/time.js",
+  "scripts": {
+    "test": "node --test"
+  },
+  "license": "MIT"
+}
