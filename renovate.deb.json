@@ -1,0 +1,32 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "enabledManagers": ["custom.regex"],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "managerFilePatterns": ["/(^|/)Containerfile(\\..*)?$/"],
+      "matchStrings": [
+        "#\\s*renovate:\\s*(suite=(?<suite>.*?))?\\s*depName=(?<depName>.*?)\\n\\s*ARG .*?=\\\"(?<currentValue>.*)\\\""
+      ],
+      "packageNameTemplate": "{{{depName}}}",
+      "registryUrlTemplate": "https://deb.debian.org/debian?suite={{#if suite}}{{suite}}{{else}}stable{{/if}}&components=main&binaryArch=amd64",
+      "datasourceTemplate": "custom.debReco",
+      "versioningTemplate": "deb"
+    }
+  ],
+  "customDatasources": {
+    "debReco": {
+      "defaultRegistryUrlTemplate": "http://host.docker.internal:8080/recommendation/debian?packageName={{packageName}}&packageValue={{currentValue}}",
+      "format": "json",
+      "transformTemplates": [
+        "{\"releases\":[{\"version\":recommendedVersion}]}"
+      ]
+    }
+  },
+  "logLevelRemap": [
+    {
+      "matchMessage": "/^Custom datasource/",
+      "newLogLevel": "info"
+    }
+  ]
+}
