@@ -1,11 +1,27 @@
 {
-  "name": "renovate-custom-datasource-test",
-  "private": true,
+  "name": "clear",
   "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "homepage": "https://github.com/5byuri/renovate-poc#readme",
+  "bugs": {
+    "url": "https://github.com/5byuri/renovate-poc/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/5byuri/renovate-poc.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
   "dependencies": {
-    "@sentry/nextjs": "^9.38.0",
-    "@types/node": "^20.11.0",
-    "@types/react": "^18.0.28",
-    "@types/react-dom": "^18.0.11"
+    "next": "9.5.5",
+    "node": "20.20.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
   }
 }
