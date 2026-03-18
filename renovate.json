@@ -27,7 +27,7 @@
   ],
   "customDatasources": {
     "debReco": {
-      "defaultRegistryUrlTemplate": "http://host.docker.internal:8080/recommendation/debian?packageName={{packageName}}&packageValue={{currentValue}}",
+      "defaultRegistryUrlTemplate": "http://host.docker.internal:8080/recommendation/debian?packageName={{{encodeURIComponent packageName}}}&packageValue={{{encodeURIComponent currentValue}}}",
       "format": "json",
       "transformTemplates": [
         "{\"releases\":[{\"version\":recommendedVersion}]}"

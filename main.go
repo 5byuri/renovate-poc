@@ -8,9 +8,16 @@ import (
 )
 
 type Recommendation struct {
-	PackageName        string `json:"packageName"`
 	RecommendedVersion string `json:"recommendedVersion"`
-	Strategy           string `json:"strategy"`
+}
+
+var demoRecommendations = map[string]string{
+	"@sentry/nextjs":   "9.39.0",
+	"@types/node":      "20.12.0",
+	"@types/react":     "18.2.79",
+	"@types/react-dom": "18.2.25",
+	"curl":             "7.88.1-10+deb12u9",
+	"git":              "1:2.39.5-0+deb12u3",
 }
 
 func recommendationHandler(w http.ResponseWriter, r *http.Request) {
@@ -39,10 +46,13 @@ func recommendationHandler(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Printf("custom request: packageName=%s currentValue=%s\n", packageName, currentValue)
 
+	recommendedVersion := demoRecommendations[packageName]
+	if recommendedVersion == "" {
+		recommendedVersion = currentValue
+	}
+
 	resp := Recommendation{
-		PackageName:        packageName,
-		RecommendedVersion: currentValue,
-		Strategy:           "request-echo",
+		RecommendedVersion: recommendedVersion,
 	}
 
 	w.Header().Set("Content-Type", "application/json")
