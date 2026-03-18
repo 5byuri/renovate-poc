@@ -13,12 +13,6 @@ type Recommendation struct {
 	Strategy           string `json:"strategy"`
 }
 
-var demoVersions = map[string]string{
-	"curl":            "7.88.1-10+deb12u9",
-	"git":             "1:2.39.5-0+deb12u3",
-	"ca-certificates": "20230311+deb12u1",
-}
-
 func recommendationHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
@@ -30,29 +24,25 @@ func recommendationHandler(w http.ResponseWriter, r *http.Request) {
 		packageName = r.URL.Query().Get("depName")
 	}
 	if packageName == "" {
-		packageName = "curl"
+		http.Error(w, "missing packageName", http.StatusBadRequest)
+		return
 	}
 
 	currentValue := r.URL.Query().Get("packageValue")
 	if currentValue == "" {
 		currentValue = r.URL.Query().Get("currentValue")
 	}
+	if currentValue == "" {
+		http.Error(w, "missing packageValue/currentValue", http.StatusBadRequest)
+		return
+	}
 
 	fmt.Printf("custom request: packageName=%s currentValue=%s\n", packageName, currentValue)
 
-	recommended := demoVersions[packageName]
-	if recommended == "" {
-		if currentValue != "" {
-			recommended = currentValue
-		} else {
-			recommended = "0.0.0-demo"
-		}
-	}
-
 	resp := Recommendation{
 		PackageName:        packageName,
-		RecommendedVersion: recommended,
-		Strategy:           "custom-http-demo",
+		RecommendedVersion: currentValue,
+		Strategy:           "request-echo",
 	}
 
 	w.Header().Set("Content-Type", "application/json")

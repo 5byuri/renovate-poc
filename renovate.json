@@ -1,6 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "enabledManagers": ["custom.regex", "npm"],
+  "enabledManagers": ["custom.regex", "custom.jsonata"],
   "customManagers": [
     {
       "customType": "regex",
@@ -11,7 +11,19 @@
       "packageNameTemplate": "{{{depName}}}",
       "datasourceTemplate": "custom.debReco",
       "versioningTemplate": "deb"
-    }
+    },
+    {
+  "customType": "jsonata",
+  "fileFormat": "json",
+  "managerFilePatterns": ["/(^|/)package\\.json$/"],
+  "matchStrings": [
+    "$each(dependencies, function($v, $k) { {'depName': $k, 'currentValue': $v} })",
+    "$each(devDependencies, function($v, $k) { {'depName': $k, 'currentValue': $v} })"
+  ],
+  "packageNameTemplate": "{{{depName}}}",
+  "datasourceTemplate": "custom.debReco",
+  "versioningTemplate": "npm"
+}
   ],
   "customDatasources": {
     "debReco": {
