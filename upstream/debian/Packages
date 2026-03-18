@@ -1,0 +1,4 @@
+Package: vim
+Version: 9.1.1111-1
+Architecture: arm64
+Description: Demo vim package entry

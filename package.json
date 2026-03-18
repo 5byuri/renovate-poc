@@ -1,0 +1,8 @@
+{
+  "name": "renovate-custom-datasource-test",
+  "private": true,
+  "version": "1.0.0",
+  "dependencies": {
+    "@sentry/nextjs": "^9.38.0"
+  }
+}
