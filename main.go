@@ -42,7 +42,7 @@ func recommendationHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Printf("custom request: packageName=%s currentValue=%s\n", packageName, currentValue)
+	fmt.Printf("packageName=%s currentValue=%s\n", packageName, currentValue)
 
 	recommendedVersion := demoRecommendations[packageName]
 	if recommendedVersion == "" {
@@ -53,6 +53,7 @@ func recommendationHandler(w http.ResponseWriter, r *http.Request) {
 		RecommendedVersion: recommendedVersion,
 	}
 
+	fmt.Printf("%v", resp)
 	w.Header().Set("Content-Type", "application/json")
 	_ = json.NewEncoder(w).Encode(resp)
 }

@@ -1,6 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "enabledManagers": ["custom.regex", "custom.jsonata"],
+  "hostRules": [
+    {
+      "matchHost": "host.docker.internal:8080",
+      "token": "c6b7dfd09f8a04700b5b1950a3486eff31188d1ce5dc35893cbe14c55285a021"
+    }
+  ],
   "customManagers": [
     {
       "customType": "regex",
@@ -13,21 +19,21 @@
       "versioningTemplate": "deb"
     },
     {
-  "customType": "jsonata",
-  "fileFormat": "json",
-  "managerFilePatterns": ["/(^|/)package\\.json$/"],
-  "matchStrings": [
-    "$each(dependencies, function($v, $k) { {'depName': $k, 'currentValue': $v} })",
-    "$each(devDependencies, function($v, $k) { {'depName': $k, 'currentValue': $v} })"
-  ],
-  "packageNameTemplate": "{{{depName}}}",
-  "datasourceTemplate": "custom.debReco",
-  "versioningTemplate": "npm"
-}
+      "customType": "jsonata",
+      "fileFormat": "json",
+      "managerFilePatterns": ["/(^|/)package\\.json$/"],
+      "matchStrings": [
+        "$each(dependencies, function($v, $k) { {'depName': $k, 'currentValue': $v} })",
+        "$each(devDependencies, function($v, $k) { {'depName': $k, 'currentValue': $v} })"
+      ],
+      "packageNameTemplate": "{{{depName}}}",
+      "datasourceTemplate": "custom.debReco",
+      "versioningTemplate": "npm"
+    }
   ],
   "customDatasources": {
     "debReco": {
-      "defaultRegistryUrlTemplate": "http://host.docker.internal:8080/recommendation?packageName={{{encodeURIComponent packageName}}}&packageValue={{{encodeURIComponent currentValue}}}",
+      "defaultRegistryUrlTemplate": "http://host.docker.internal:8080/api/v1/renovate/recommendation?packageName={{{encodeURIComponent packageName}}}&packageValue={{{encodeURIComponent currentValue}}}",
       "format": "json",
       "transformTemplates": [
         "{\"releases\":[{\"version\":recommendedVersion}]}"

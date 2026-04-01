@@ -5,6 +5,10 @@ FROM debian:bookworm-slim
 ARG CURL_VERSION="7.88.1-10+deb12u8"
 # renovate: suite=bookworm depName=git
 ARG GIT_VERSION="1:2.39.5-0+deb12u2"
+
+# renovate: suite=bookworm depName=file
+ARG FILE="5.46-5"
+    
 # renovate: suite=bookworm depName=ca-certificates
 ARG CA_CERTIFICATES_VERSION="20230311"
 
